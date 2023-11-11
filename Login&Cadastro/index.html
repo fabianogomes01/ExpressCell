@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!-- Link para o arquivo CSS externo chamado 'index.css' -->
+  <link rel="stylesheet" href="/Login&Cadastro/index.css">
+  
+  <title>Document</title>
+</head>
+<body>
+  
+  <div class="img"></div>
+  
+ <!-- Início do formulário de login e cadastro -->
+<div class="wrapper">
+  <div class="title-text">
+    <div class="title login">
+      Entrar 
+    </div>
+    <div class="title signup">
+      Cadastrar
+    </div>
+  </div>
+  <div class="form-container">
+    <div class="slide-controls">
+      <input type="radio" name="slide" id="login" checked>
+      <input type="radio" name="slide" id="signup">
+      <label for="login" class="slide login">Entrar</label>
+      <label for="signup" class="slide signup">Cadastrar</label>
+      <div class="slider-tab"></div>
+    </div>
+    <div class="form-inner">
+
+      <!-- Formulário de login -->
+      <form action="#" class="login">
+        <div class="field">
+          <input type="text" placeholder="Email" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Senha" required>
+        </div>
+        <div class="pass-link">
+          <a href="#">Esqueceu sua senha?</a>
+        </div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Entrar">
+        </div>
+        <div class="signup-link">
+          Não tem cadastro? <a href="">Cadastre-se</a>
+        </div>
+      </form>
+
+       <!-- Formulário de cadastro -->
+      <form action="#" class="signup">
+        <div class="field">
+          <input type="text" placeholder="Email" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Senha" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Confirmar senha" required>
+        </div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Cadastrar">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Fim do formulário de login e cadastro -->
+
+<script src="/Login&Cadastro/index.js"></script>
+
+</body>
+</html>
