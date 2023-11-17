@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>PhoneClub - Reparos de Smartphone</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/Home/img/PhoneClub.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <!-- Bliblioteca de icones -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+            <!-- jQuery -->
+         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    </head>
+    <body>
+
+        <!-- Responsive navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-lg-5">
+                <a class="navbar-brand" href="#!">PhoneClub</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/Home/index.html">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <!-- Pagamentos -->
+        <header class="py-5 bg-dark text-white text-center mb-0">
+            <h2 class="h3 fw-bold display-5">Pagamento</h2>
+        </header>
+    
+        <!-- Formulário de Pagamento -->
+        <div class="container mt-5">
+            <form>
+                <!-- Informações de Envio -->
+                <h3>Informações de Envio</h3>
+                <div class="mb-3">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Seu Nome">
+                </div>
+                <div class="mb-3">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" placeholder="Rua, Número, Complemento">
+                </div>
+                <div class="mb-3">
+                    <label for="pais">País</label>
+                    <select class="form-select" id="pais">
+                        <option value="brasil">Brasil</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="estado">Estado</label>
+                    <select class="form-select" id="estado" onchange="buscarCidades()">
+                        <!-- Opção padrão -->
+                        <option value="">Selecione um Estado</option>
+                        <!-- Estados carregados dinamicamente pela API -->
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="cidade">Cidade</label>
+                    <select class="form-select" id="cidade">
+                        <!-- Opção padrão -->
+                        <option value="">Selecione um Estado primeiro</option>
+                        <!-- Cidades carregadas dinamicamente pela API -->
+                    </select>
+                </div>
+    
+                <!-- Informações de Pagamento -->
+                <h3>Informações de Pagamento</h3>
+                <div class="mb-3">
+                    <label for="tipoPagamento">Método de Pagamento</label>
+                    <select class="form-select" id="tipoPagamento" onchange="toggleCamposPagamento()">
+                        <option value="cartao">Cartão de Crédito</option>
+                        <option value="debito">Cartão de Débito</option>
+                        <option value="pix">Pix</option>
+                    </select>
+                </div>
+    
+                <!-- Campos para Cartão de Crédito/Debito -->
+                <div id="camposCartao">
+                    <div class="mb-3">
+                        <label for="nomeCartao">Nome no Cartão</label>
+                        <input type="text" class="form-control" id="nomeCartao" placeholder="Seu Nome">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numCartao">Número do Cartão</label>
+                        <input type="text" class="form-control" id="numCartao" placeholder="xxxx-xxxx-xxxx-xxxx">
+                    </div>
+                    <div class="mb-3">
+                        <label for="dataExpiracao">Data de Expiração</label>
+                        <input type="text" class="form-control" id="dataExpiracao" placeholder="MM/AA">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cvv">CVV</label>
+                        <input type="text" class="form-control" id="cvv" placeholder="xxx">
+                    </div>
+                </div>
+    
+                <!-- Campo para Pix -->
+                <div id="campoPix" style="display: none;">
+                    <div class="mb-3">
+                        <label for="chavePix">Chave Pix</label>
+                        <input type="text" class="form-control" id="chavePix" placeholder="Chave Pix Aleatória" readonly>
+                    </div>
+                </div>
+    
+                <!-- Botão de Confirmar Compra -->
+                <button type="button" class="btn btn-warning">Confirmar Compra</button>
+            </form>
+        </div>
+
+        <br><br>
+    
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+        </footer>
+    
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+
+        <script>
+            // Função para carregar os estados na lista
+            function carregarEstados() {
+                $.ajax({
+                    url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        // Limpa e adiciona a opção padrão
+                        $('#estado').html('<option value="">Selecione um Estado</option>');
+    
+                        // Adiciona os estados na lista
+                        data.forEach(function (estado) {
+                            $('#estado').append('<option value="' + estado.sigla + '">' + estado.nome + '</option>');
+                        });
+                    }
+                });
+            }
+    
+            // Função para carregar as cidades com base no estado selecionado
+            function buscarCidades() {
+                var estadoSelecionado = $('#estado').val();
+    
+                // Verifica se um estado foi selecionado
+                if (estadoSelecionado) {
+                    $.ajax({
+                        url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + estadoSelecionado + '/municipios',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            // Limpa e adiciona a opção padrão
+                            $('#cidade').html('<option value="">Selecione uma Cidade</option>');
+    
+                            // Adiciona as cidades na lista
+                            data.forEach(function (cidade) {
+                                $('#cidade').append('<option value="' + cidade.nome + '">' + cidade.nome + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    // Limpa a lista de cidades se nenhum estado estiver selecionado
+                    $('#cidade').html('<option value="">Selecione um Estado primeiro</option>');
+                }
+            }
+    
+            // Carrega os estados quando a página é carregada
+            $(document).ready(function () {
+                carregarEstados();
+            });
+        </script>
+
+<script>
+    // Função para alternar a visibilidade dos campos de pagamento
+    function toggleCamposPagamento() {
+        var tipoPagamento = $('#tipoPagamento').val();
+
+        // Esconde todos os campos de pagamento
+        $('#camposCartao, #campoPix').hide();
+
+        // Mostra os campos correspondentes ao tipo de pagamento selecionado
+        if (tipoPagamento === 'cartao' || tipoPagamento === 'debito') {
+            $('#camposCartao').show();
+        } else if (tipoPagamento === 'pix') {
+            $('#campoPix').show();
+            // Gera e preenche uma chave Pix aleatória
+            $('#chavePix').val(gerarChavePix());
+        }
+    }
+
+        // Função para gerar uma chave Pix aleatória de 32 dígitos
+        function gerarChavePix() {
+            var caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var chavePix = '';
+
+            for (var i = 0; i < 32; i++) {
+                var indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+                chavePix += caracteres.charAt(indiceAleatorio);
+            }
+
+            return chavePix;
+        }
+
+    // Carrega os estados quando a página é carregada
+    $(document).ready(function () {
+        carregarEstados();
+    });
+</script>
+    </body>
+</html>
