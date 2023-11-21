@@ -1,0 +1,8 @@
+Cores:
+
+amarelo: #ffc107
+dark: #212529
+branco: #fff
+
+
+Ideias para a tela de produtos: transformar a div em uma input que quando o usuario passar o mouse na area da div possa clicar e acessa a pagina.
