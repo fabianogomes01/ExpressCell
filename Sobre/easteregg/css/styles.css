@@ -10825,6 +10825,6 @@ textarea.form-control-lg {
   }
 }
 body {
-  background: url("/Sobre/easteregg/imgFundo.jpg!d") no-repeat center center fixed;
+  background: url("/Sobre/easteregg/imgFundo.jpg") no-repeat center center fixed;
   background-size: cover;
 }
