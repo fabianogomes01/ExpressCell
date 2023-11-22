@@ -6,3 +6,7 @@ branco: #fff
 
 
 Ideias para a tela de produtos: transformar a div em uma input que quando o usuario passar o mouse na area da div possa clicar e acessa a pagina.
+
+Troca capinha por case na barra de tarefas
+
+Funcão de adicionar ao carrinho
